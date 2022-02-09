@@ -29,7 +29,7 @@ public class Producto {
 	private double precio;
 	private int cantidad;
 	
-	@ManyToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	private Usuario usuario;
 
 }
