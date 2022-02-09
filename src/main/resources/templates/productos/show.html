@@ -26,6 +26,10 @@
 <div class="container">
 
 
+	<div th:if="${msg !=null}"  class="alert alert-warning alert-dismissible fade show mt-2" role="alert">
+  		<strong>[[${msg}]]</strong> 
+	</div>
+  
   <!-- Page Heading/Breadcrumbs -->
   <h1 class="mt-4 mb-3">
     Spring eCommerce <small>Productos</small>
