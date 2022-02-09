@@ -84,5 +84,23 @@ public class ProductoController {
 		return "redirect:/productos";
 	}
 	
+	@GetMapping("/delete/{id}")
+	public String delete(@PathVariable Integer id, RedirectAttributes redirectAttributes) {
+		
+		Producto producto =  null;
+		
+		Optional<Producto> optionalProducto = productoService.get(id);
+		
+		producto = optionalProducto.orElse(null);
+		
+		LOGGER.info("Producto buscado a eliminar {}",producto);
+		
+		if (producto ==null) {
+			redirectAttributes.addFlashAttribute("msg", "El producto con ID %s no existe".formatted(id));
+		}else productoService.delete(id);
+		
+		return "redirect:/productos";
+	}
+	
 	
 }
