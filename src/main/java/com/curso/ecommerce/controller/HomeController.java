@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.curso.ecommerce.model.DetalleOrden;
 import com.curso.ecommerce.model.Orden;
@@ -78,13 +77,11 @@ public class HomeController {
 			Integer idProducto = producto.getId();
 			boolean isExiste = detalles.stream().anyMatch(dtp -> dtp.getProducto().getId() ==idProducto); 
 			
-			if (!isExiste) {				
-				detalles.add(detalleOrden);
-			}else {
-				model.addAttribute("msg","El producto <strong >%s</strong> ya esta registrado"
-												.formatted(producto.getNombre()));
-			}
+			if (!isExiste) detalles.add(detalleOrden);
 			
+			model.addAttribute("msg",  !isExiste? "El producto <strong > %s </strong> fue agregado correctamente ".formatted(producto.getNombre())
+											     : "El producto <strong > %s </strong> ya esta registrado".formatted(producto.getNombre()));
+			model.addAttribute("tipoMsg", !isExiste);
 			
 			total = detalles
 							.stream()
@@ -121,6 +118,10 @@ public class HomeController {
 		orden.setTotal(nuevoTotal);
 		model.addAttribute("cards", detalles);
 		model.addAttribute("orden", orden);
+		
+		
+		model.addAttribute("msg", "Producto eliminado correctamente");
+		model.addAttribute("tipoMsg", true);
 		
 		return "usuario/carrito";
 	}
