@@ -174,9 +174,6 @@ public class HomeController {
 		 orden.setUsuario(usuario);
 		 ordenService.save(orden);
 		 
-		// LOGGER.info("Orden guardada: {}", orden);
-		 
-		 
 		 // Guardar detalles
 		 detalles.forEach( dt -> {
 		
@@ -193,4 +190,40 @@ public class HomeController {
 		 
 		 return "redirect:/";
 	}
+	 
+	 /**
+	  * 
+	  * @param nombre: Nombre del producto a buscar
+	  * @param model : Model de datos enviados a la vista
+	  * @return : Lista de productos encontrados, si el nombre a buscar viene vacio, listará todos los productos
+	  */
+	 @PostMapping("/search")
+	 public String searchProducto(@RequestParam String nombre, Model model) {
+		 
+		  LOGGER.info("Nombre del producto a buscar: {} ", nombre);
+		 
+		  List<Producto> productos = productoService.findAll();
+		
+		  if (nombre !=null && !nombre.isBlank()) {
+			  
+			  List<Producto> productosFiltro = productos
+						 .stream()
+						 .filter(p -> p.getNombre().toLowerCase().contains(nombre.toLowerCase()))
+						 .collect(Collectors.toList());
+			  
+			  if (productosFiltro.size()<1) {
+				  model.addAttribute("msgSearch","No se encontraron  coincidencias para el nombre <strong> %s </strong>".formatted(nombre));
+			  }
+			  
+			  LOGGER.info("Longitud productos encontrados: {}", productosFiltro.size() );
+			  
+			  
+			  productos = productosFiltro;
+			  
+		  } 
+		  
+			 model.addAttribute("productos",productos);
+		 return "usuario/home";
+	 }
+	 
 }
