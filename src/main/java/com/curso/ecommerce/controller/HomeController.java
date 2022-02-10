@@ -126,4 +126,15 @@ public class HomeController {
 		return "usuario/carrito";
 	}
 	
+	@GetMapping("/getCard")
+	public String getCard(Model model) {
+		
+		model.addAttribute("cards", detalles);
+		model.addAttribute("orden", orden);
+		
+		return "usuario/carrito";
+	}
+	
+	
+	
 }
