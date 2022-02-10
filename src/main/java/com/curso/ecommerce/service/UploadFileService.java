@@ -18,8 +18,8 @@ public final class UploadFileService {
 	
 	public String saveImage(MultipartFile file) throws IOException {
 		
-		
-		if (file.isEmpty()) {
+		// Si selecciona una imagen
+		if (!file.isEmpty()) {
 			
 			// Obtener los bytes de la imagen
 			byte [] bytes = file.getBytes();
@@ -32,6 +32,7 @@ public final class UploadFileService {
 			return file.getOriginalFilename();
 		}
 		
+		// Imagen por default, si no selecciona una imagen
 		return "default.jpg";
 	}
 	
