@@ -1,7 +1,10 @@
 package com.curso.ecommerce.controller;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -63,7 +66,7 @@ public class HomeController {
 			DetalleOrden detalleOrden =  new DetalleOrden();
 			double total =0;
 			
-			detalleOrden.setNombre(producto.getNombre());
+			detalleOrden.setNombre(producto.getNombre());			
 			detalleOrden.setPrecio(producto.getPrecio());
 			detalleOrden.setCantidad(cantidad);
 			detalleOrden.setProducto(producto);
@@ -81,6 +84,30 @@ public class HomeController {
 			model.addAttribute("cards", detalles);
 			model.addAttribute("orden", orden);
 		}
+		
+		return "usuario/carrito";
+	}
+	
+	@GetMapping("/delete/card/{id}")
+	public String deleteProductoCard(@PathVariable Integer id, Model model) {
+		
+		double nuevoTotal = 0;
+		List<DetalleOrden> nuevoDetalle = detalles
+												 .stream()
+												 .filter(dto ->  dto.getProducto().getId() !=id )
+												 .collect(Collectors.toList());
+		
+		// Actualizar lista 
+		detalles = nuevoDetalle;
+		
+		nuevoTotal = detalles
+				.stream()
+				.mapToDouble(dt -> dt.getTotal())
+				.sum();
+		
+		orden.setTotal(nuevoTotal);
+		model.addAttribute("cards", detalles);
+		model.addAttribute("orden", orden);
 		
 		return "usuario/carrito";
 	}
