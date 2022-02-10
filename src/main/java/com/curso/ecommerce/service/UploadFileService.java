@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 public final class UploadFileService {
 
 	
-	private final String FOLDER = "images//";
+	private final String FOLDER = "src//main//resources//static/img";
 	
 	
 	public String saveImage(MultipartFile file) throws IOException {
@@ -21,13 +21,19 @@ public final class UploadFileService {
 		// Si selecciona una imagen
 		if (!file.isEmpty()) {
 			
+			// Directorio de img 
+			Path directorioImg = Paths.get(FOLDER);
+			
+			String rutaAbsoluta = directorioImg.toFile().getAbsolutePath();
+			
 			// Obtener los bytes de la imagen
 			byte [] bytes = file.getBytes();
 			
-			// Path donde se guardara la imagen
-			Path path = Paths.get(FOLDER + file.getOriginalFilename());
 			
-			Files.write(path, bytes);
+			// Path donde se guardara la imagen
+			Path pathCompleto = Paths.get(rutaAbsoluta+"//"+file.getOriginalFilename());
+			
+			Files.write(pathCompleto, bytes);
 			
 			return file.getOriginalFilename();
 		}
@@ -39,9 +45,10 @@ public final class UploadFileService {
 	public void deleteImage(String nombre) {
 		
 		// Ruta base donde se encuentra la imagen
-		String ruta = FOLDER;
+		Path directorioImg = Paths.get(FOLDER);
 		
-		File file = new File(ruta + nombre);
+		String rutaAbsoluta = directorioImg.toFile().getAbsolutePath();
+		File file = new File(rutaAbsoluta +"//"+nombre);
 		
 		file.delete();
 	}
