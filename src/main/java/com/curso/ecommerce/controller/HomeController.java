@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.curso.ecommerce.model.DetalleOrden;
 import com.curso.ecommerce.model.Orden;
@@ -55,7 +56,8 @@ public class HomeController {
 	
 	
 	@PostMapping("/cart")
-	public String addCart(@RequestParam Integer id, @RequestParam  Integer cantidad, Model model) {
+	public String addCart(@RequestParam Integer id, @RequestParam  Integer cantidad, 
+			              Model model) {
 		
 		Producto producto = productoService.get(id).orElse(null);
 		LOGGER.info("Producto añadido al carrito {}", producto);
@@ -71,7 +73,18 @@ public class HomeController {
 			detalleOrden.setCantidad(cantidad);
 			detalleOrden.setProducto(producto);
 			detalleOrden.setTotal(detalleOrden.getCantidad() * detalleOrden.getPrecio());
-			detalles.add(detalleOrden);
+			
+			// Validr que no se añade el mismo producto mas de una vez a la misma orden
+			Integer idProducto = producto.getId();
+			boolean isExiste = detalles.stream().anyMatch(dtp -> dtp.getProducto().getId() ==idProducto); 
+			
+			if (!isExiste) {				
+				detalles.add(detalleOrden);
+			}else {
+				model.addAttribute("msg","El producto <strong >%s</strong> ya esta registrado"
+												.formatted(producto.getNombre()));
+			}
+			
 			
 			total = detalles
 							.stream()

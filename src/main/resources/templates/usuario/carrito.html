@@ -24,6 +24,9 @@
   <!-- Navigation -->
   <div th:include="usuario/template_usuario::header"></div>
 
+	<div th:if="${msg != null}" th:utext="${msg}" class="alert alert-warning">
+		
+	</div>
     <!-- Page Content -->
     <div class="container">
 
