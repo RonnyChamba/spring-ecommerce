@@ -1,5 +1,8 @@
 package com.curso.ecommerce.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +10,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.curso.ecommerce.model.DetalleOrden;
+import com.curso.ecommerce.model.Orden;
 import com.curso.ecommerce.model.Producto;
 import com.curso.ecommerce.service.IProductoService;
 
@@ -20,6 +27,10 @@ public class HomeController {
 	
 	@Autowired
 	private IProductoService productoService;
+	
+	private List<DetalleOrden> detalles = new ArrayList<>();
+	
+	private Orden orden = new Orden();;
 	
 	@GetMapping({""})
 	public String home(Model model) {
@@ -37,6 +48,41 @@ public class HomeController {
 		model.addAttribute("producto", producto);
 		
 		return "usuario/productohome";
+	}
+	
+	
+	@PostMapping("/cart")
+	public String addCart(@RequestParam Integer id, @RequestParam  Integer cantidad, Model model) {
+		
+		Producto producto = productoService.get(id).orElse(null);
+		LOGGER.info("Producto añadido al carrito {}", producto);
+		if (producto !=null) {
+			
+			
+			
+			DetalleOrden detalleOrden =  new DetalleOrden();
+			double total =0;
+			
+			detalleOrden.setNombre(producto.getNombre());
+			detalleOrden.setPrecio(producto.getPrecio());
+			detalleOrden.setCantidad(cantidad);
+			detalleOrden.setProducto(producto);
+			detalleOrden.setTotal(detalleOrden.getCantidad() * detalleOrden.getPrecio());
+			detalles.add(detalleOrden);
+			
+			total = detalles
+							.stream()
+							.mapToDouble(dt -> dt.getTotal())
+							.sum();
+			
+			orden.setTotal(total);
+			
+			
+			model.addAttribute("cards", detalles);
+			model.addAttribute("orden", orden);
+		}
+		
+		return "usuario/carrito";
 	}
 	
 }
