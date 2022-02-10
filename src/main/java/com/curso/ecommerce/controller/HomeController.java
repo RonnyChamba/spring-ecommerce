@@ -16,11 +16,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.curso.ecommerce.model.DetalleOrden;
 import com.curso.ecommerce.model.Orden;
 import com.curso.ecommerce.model.Producto;
+import com.curso.ecommerce.model.Usuario;
 import com.curso.ecommerce.service.IProductoService;
+import com.curso.ecommerce.service.IUsurioService;
 
 @Controller
 @RequestMapping({"/"})
@@ -30,6 +33,10 @@ public class HomeController {
 	
 	@Autowired
 	private IProductoService productoService;
+	
+	
+	@Autowired
+	private IUsurioService usurioService;
 	
 	private List<DetalleOrden> detalles = new ArrayList<>();
 	
@@ -95,7 +102,8 @@ public class HomeController {
 			model.addAttribute("orden", orden);
 		}
 		
-		return "usuario/carrito";
+		 return "usuario/carrito";
+	
 	}
 	
 	@GetMapping("/delete/card/{id}")
@@ -135,6 +143,16 @@ public class HomeController {
 		return "usuario/carrito";
 	}
 	
+	 @GetMapping("/order")
+	 public String order(Model model) {
+		 
+		 Usuario usuario = usurioService.get(1).orElse(null);
+		 
+		model.addAttribute("cards", detalles);
+		model.addAttribute("orden", orden); 
+		model.addAttribute("usuario", usuario);
+		return "usuario/resumenorden";
+	 }
 	
 	
 }

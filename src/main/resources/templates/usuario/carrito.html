@@ -67,6 +67,7 @@
                 </tr>
               </tbody>
             </table>
+            <div th:if="${cards.size()<1}" class="alert alert-info"> Tu carrito se encuentra vacio</div>
           </div>
 
           <div class="col-lg-3">
@@ -74,7 +75,7 @@
 
             <ul class="list-group">
               <li class="list-group-item"><h5 th:text =" 'Total $:' + ${orden.total}"></h5></li>
-              <a href="resumenorden.html" class="btn btn-dark">Ver Orden</a>
+              <a th:href="@{/order}" class="btn btn-dark">Ver Orden</a>
             </ul>
           </div>
 
