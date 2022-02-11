@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.curso.ecommerce.model.DetalleOrden;
 import com.curso.ecommerce.model.Orden;
 import com.curso.ecommerce.model.Producto;
@@ -178,18 +176,15 @@ public class HomeController {
 				 						.orElse(null);
 		 
 		 orden.setUsuario(usuario);
+		 
+		 // Aqui a cad detalle de la lista se asigna la orden, ver metodo
+		 orden.setDetalles(detalles);
+		 
+		 // Al persistir la orden tambien se persistirá los detalles de la orden
 		 ordenService.save(orden);
 		 
-		 // Guardar detalles
-		 detalles.forEach( dt -> {
-		
-			 // A cada detalle asignar la orden a la que pertenece
-			 dt.setOrden(orden);
-			 // Guardar el detalle
-			detalleOrdenService.save(dt);
-		 });
-		 
-		 
+		 LOGGER.info("Orden guardadad: {}", orden);
+		 	 
 		 // Limpiar lista y orden
 		 orden = new Orden();
 		 detalles.clear();
