@@ -3,6 +3,8 @@
 import java.io.IOException;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.curso.ecommerce.model.Producto;
 import com.curso.ecommerce.model.Usuario;
 import com.curso.ecommerce.service.IProductoService;
+import com.curso.ecommerce.service.IUsurioService;
 import com.curso.ecommerce.service.UploadFileService;
 
 @Controller
@@ -34,6 +37,10 @@ public class ProductoController {
 	@Autowired
     private UploadFileService upload;
 	
+	
+	@Autowired
+	private IUsurioService usurioService;
+	
 	@GetMapping({"/", ""})
 	public String show(Model model) {
 		
@@ -48,10 +55,12 @@ public class ProductoController {
 	}
 	
 	@PostMapping("/save")
-	public String  save(Producto producto, @RequestParam("img") MultipartFile file ) throws IOException {
+	public String  save(Producto producto, @RequestParam("img") MultipartFile file, HttpSession session ) throws IOException {
 		
 		
-		Usuario usuario = new Usuario(1, "", "", "", "", "", "", "", null, null);
+		Usuario usuario = usurioService.get( Integer.parseInt(session.getAttribute("idusuario").toString()))
+										.orElse(null); 
+		
 		producto.setUsuario(usuario);
 		
 		String nombreImagen = upload.saveImage(file);

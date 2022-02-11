@@ -10,6 +10,7 @@ public interface IUsurioService {
 	Usuario save(Usuario usuario);
 	Optional<Usuario> get(Integer id);
 	void update(Usuario usuario);
-	void delete(Integer id); 
+	void delete(Integer id);
+	Optional<Usuario> findByEmail(String email);
 
 }

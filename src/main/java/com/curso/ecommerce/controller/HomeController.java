@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,8 +52,9 @@ public class HomeController {
 	private Orden orden = new Orden();;
 	
 	@GetMapping({""})
-	public String home(Model model) {
+	public String home(Model model, HttpSession session) {
 		
+		LOGGER.info("Sesion de usurio :{}", session.getAttribute("idusuario"));
 		
 		model.addAttribute("productos", productoService.findAll());
 		return "usuario/home";
@@ -151,9 +154,11 @@ public class HomeController {
 	}
 	
 	 @GetMapping("/order")
-	 public String order(Model model) {
+	 public String order(Model model, HttpSession session) {
 		 
-		 Usuario usuario = usurioService.get(1).orElse(null);
+		 
+		 Usuario usuario = usurioService.get(Integer.parseInt(session.getAttribute("idusuario").toString()))
+				 						.orElse(null);
 		 
 		model.addAttribute("cards", detalles);
 		model.addAttribute("orden", orden); 
@@ -162,14 +167,15 @@ public class HomeController {
 	 }
 	
 	 @GetMapping("/saveOrder")
-	public String saveOrder(){
+	public String saveOrder(HttpSession session){
 		
 		 LocalDate date = LocalDate.now();
 		 
 		 orden.setFechaCreacion(date);
 		 orden.setNumero( ordenService.generaNumeroOrden());
 		 
-		 Usuario usuario = usurioService.get(1).orElse(null);
+		 Usuario usuario = usurioService.get(Integer.parseInt(session.getAttribute("idusuario").toString()))
+				 						.orElse(null);
 		 
 		 orden.setUsuario(usuario);
 		 ordenService.save(orden);

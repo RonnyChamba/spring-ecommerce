@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.curso.ecommerce.model.Usuario;
 import com.curso.ecommerce.repository.UsuarioRepository;
 
+import net.bytebuddy.asm.Advice.Return;
+
 @Service
 public class UsuarioServiceImpl  implements IUsurioService {
 
@@ -47,6 +49,12 @@ public class UsuarioServiceImpl  implements IUsurioService {
 
 		usuarioRepository.deleteById(id);
 		
+	}
+
+	@Override
+	public Optional<Usuario> findByEmail(String email) {
+		
+		return  usuarioRepository.findByEmail(email);
 	}
 
 }
