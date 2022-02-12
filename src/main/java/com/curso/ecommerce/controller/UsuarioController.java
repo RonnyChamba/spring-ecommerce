@@ -11,10 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.curso.ecommerce.model.DetalleOrden;
 import com.curso.ecommerce.model.Orden;
 import com.curso.ecommerce.model.Usuario;
 import com.curso.ecommerce.service.IOrdenService;
@@ -90,6 +92,21 @@ public class UsuarioController {
 		 
 		 model.addAttribute("ordenes", ordenes);
 		 return "usuario/compras";
+	 }
+	 
+	 @GetMapping("/detalle/{id}")
+	 public String  detalleCompra( @PathVariable Integer id, 
+			 						HttpSession session, Model model) {
+		 
+		 LOGGER.info("Id de orden : ",id);
+		 
+		 Orden orden = ordenService.findById(id).orElse(null);
+		 
+		 List<DetalleOrden> detalles = orden.getDetalles();
+		 
+		 model.addAttribute("session",session.getAttribute("idusuario"));		 
+		 model.addAttribute("detalles", detalles);
+		 return "usuario/detallecompra";
 	 }
 	
 }
