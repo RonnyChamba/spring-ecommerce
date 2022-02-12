@@ -108,5 +108,12 @@ public class UsuarioController {
 		 model.addAttribute("detalles", detalles);
 		 return "usuario/detallecompra";
 	 }
+	 
+	 @GetMapping("/cerrar")
+	 public String cerrar(HttpSession session) {
+		 
+		 session.removeAttribute("idusuario");
+		 return "redirect:/";
+	 }
 	
 }

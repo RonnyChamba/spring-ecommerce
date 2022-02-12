@@ -22,8 +22,8 @@
 <body>
 
  <!-- Navigation -->
-  <div  th:if="${session ==null}" th:include="usuario/template_usuario::header"></div>
-  <div  th:unless="${session ==null}" th:include="usuario/template_usuario::header-user"></div>
+  <div  th:if="${sesion==null}" th:include="usuario/template_usuario::header"></div>
+  <div  th:unless="${sesion==null}" th:include="usuario/template_usuario::header-user"></div>
 
 	<div th:if="${msg != null}" th:utext="${msg}" class="alert" 
 					th:classappend="${tipoMsg}? 'alert-success': 'alert-warning' " >
