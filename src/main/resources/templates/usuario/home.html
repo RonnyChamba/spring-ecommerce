@@ -23,8 +23,8 @@
 
 
  <!-- Navigation -->
-  <div  th:if="${session ==null}" th:include="usuario/template_usuario::header"></div>
-  <div  th:unless="${session ==null}" th:include="usuario/template_usuario::header-user"></div>
+  <div  th:include="usuario/template_usuario::header"  th:if="${session ==null}"></div>
+  <div   th:include="usuario/template_usuario::header-user" th:unless="${session ==null}"></div>
   
   	
     <!-- Page Content -->

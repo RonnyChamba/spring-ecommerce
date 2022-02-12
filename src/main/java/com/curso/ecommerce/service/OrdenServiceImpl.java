@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.curso.ecommerce.model.Orden;
+import com.curso.ecommerce.model.Usuario;
 import com.curso.ecommerce.repository.IOrdenRepository;
 
 @Service
@@ -77,6 +78,11 @@ public class OrdenServiceImpl implements IOrdenService {
 		}
 
 		return newNumOrden;
+	}
+
+	@Override
+	public List<Orden> findByUsuario(Usuario usuario) {
+		return ordenRepository.findByUsuario(usuario);
 	}
 
 }
