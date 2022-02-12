@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.curso.ecommerce.model.Producto;
+import com.curso.ecommerce.service.IOrdenService;
 import com.curso.ecommerce.service.IProductoService;
 import com.curso.ecommerce.service.IUsurioService;
 
@@ -22,6 +23,9 @@ public class AdministradorController {
 	
 	@Autowired
 	private IUsurioService usurioService;
+	
+	@Autowired
+	private IOrdenService ordenService;
 	
 	@GetMapping({"", "/"})
 	public String home(Model model) {
@@ -40,5 +44,12 @@ public class AdministradorController {
 		return "administrador/usuarios";
 	}
 	
+	@GetMapping("/ordenes")
+	public String ordenes(Model model) {
+		
+		model.addAttribute("ordenes", ordenService.findAll());	
+		
+		return "administrador/ordenes";
+	}
 
 }
