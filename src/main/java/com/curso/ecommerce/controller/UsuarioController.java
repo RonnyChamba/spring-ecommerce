@@ -11,12 +11,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.curso.ecommerce.editors.FirstLetterUpperCase;
 import com.curso.ecommerce.model.DetalleOrden;
 import com.curso.ecommerce.model.Orden;
 import com.curso.ecommerce.model.Usuario;
@@ -37,6 +40,13 @@ public class UsuarioController {
 	private IOrdenService ordenService;
 	
 	BCryptPasswordEncoder passEconde = new BCryptPasswordEncoder();
+	
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		
+		binder.registerCustomEditor(String.class, "nombre",  new FirstLetterUpperCase("upper"));
+		
+	}
 	
 	@GetMapping("/registro")
 	public String create() {

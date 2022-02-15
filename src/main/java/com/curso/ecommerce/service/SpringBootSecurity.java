@@ -10,15 +10,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-@Configuration
-@EnableWebSecurity
+//@Configuration
+//@EnableWebSecurity
 public class SpringBootSecurity extends  WebSecurityConfigurerAdapter {
 	
 	
 	
 	// Interface propia de spring, aqui se inyecta un bean de la clase UserDetailServiceImpl
 	// ya que dicha clase, implementa esta interface
-	@Autowired
+	//@Autowired
 	private UserDetailsService userDetailService;
 	
 	/**

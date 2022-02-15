@@ -17,14 +17,14 @@ import org.springframework.stereotype.Service;
 
 import com.curso.ecommerce.model.Usuario;
 
-@Service
+//@Service
 public class UserDetailServiceImpl  implements UserDetailsService{
 
 	
-	@Autowired
+	//@Autowired
 	private IUsurioService usurioService;
 	
-	@Autowired
+	//@Autowired
 	// Para encryptar y descryptar la contraseña
 	//@Lazy para resolver la dependencias circulares
 	private  @Lazy BCryptPasswordEncoder bCrypt;
