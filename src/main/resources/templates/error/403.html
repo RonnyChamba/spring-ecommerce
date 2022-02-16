@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Error 403 | Spring eCommerce</title>
+
+  <!-- Bootstrap core CSS -->
+  <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+
+  <!-- Custom styles for this template -->
+  <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
+
+</head>
+<body>
+
+ <!-- Navigation -->
+  <div th:include="error/template_error.html::header"></div>
+  
+  
+  
+      <!-- Page Content -->
+    <div class="container">
+	
+      <!-- Jumbotron Header -->
+      <header class="jumbotron my-4 text-center">
+        <h1 class="display-3" th:text=${status}></h1>
+        <p class="lead">Acceso denegado</p>
+     	
+     	<a  th:href="@{/}" class ="btn btn-success">Regresar al inicio</a>
+      </header>
+    
+    </div>
+  
+  <!-- Footer -->
+      <div th:include="error/template_error.html::footer"></div>
+
+ <!-- Bootstrap core JavaScript -->
+    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+</html>

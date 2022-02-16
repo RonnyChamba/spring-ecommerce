@@ -53,11 +53,12 @@ public class HomeController {
 
 	@GetMapping({ "" })
 	public String home(Model model, HttpSession session) {
-
 		LOGGER.info("Sesion de usurio :{}", session.getAttribute("idusuario"));
 
 		model.addAttribute("productos", productoService.findAll());
 		model.addAttribute("sesion", session.getAttribute("idusuario"));
+		
+		
 		return "usuario/home";
 	}
 
