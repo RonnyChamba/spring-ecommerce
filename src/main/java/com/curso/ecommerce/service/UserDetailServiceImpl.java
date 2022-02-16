@@ -17,17 +17,17 @@ import org.springframework.stereotype.Service;
 
 import com.curso.ecommerce.model.Usuario;
 
-//@Service
+@Service
 public class UserDetailServiceImpl  implements UserDetailsService{
 
 	
-	//@Autowired
+	@Autowired
 	private IUsurioService usurioService;
 	
 	//@Autowired
 	// Para encryptar y descryptar la contraseña
 	//@Lazy para resolver la dependencias circulares
-	private  @Lazy BCryptPasswordEncoder bCrypt;
+	//private  @Lazy BCryptPasswordEncoder bCrypt;
 	
 	@Autowired
 	HttpSession session;
@@ -40,8 +40,8 @@ public class UserDetailServiceImpl  implements UserDetailsService{
 		LOGGER.info("Usuario username a logear: {}", username );
 		
 		Optional<Usuario> optionalUsuario = usurioService.findByEmail(username);
-		
-		if (optionalUsuario.isEmpty()){
+			
+		if (optionalUsuario.isPresent()){
 			
 			Usuario usuario = optionalUsuario.get();
 			
@@ -51,7 +51,7 @@ public class UserDetailServiceImpl  implements UserDetailsService{
 			
 			return User.builder()
 								.username(usuario.getNombre())
-								.password(bCrypt.encode(usuario.getPassword()))
+								.password(usuario.getPassword())
 								.roles(usuario.getTipo())
 								.build();	
 		}

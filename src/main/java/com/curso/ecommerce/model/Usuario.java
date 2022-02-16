@@ -38,4 +38,13 @@ public class Usuario {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "usuario",cascade = CascadeType.ALL)
 	private List<Orden> ordenes;
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nombre=" + nombre + ", username=" + username + ", email=" + email
+				+ ", direccion=" + direccion + ", telefono=" + telefono + ", tipo=" + tipo + ", password=" + password
+				+ "]";
+	}
+	
+	
 }

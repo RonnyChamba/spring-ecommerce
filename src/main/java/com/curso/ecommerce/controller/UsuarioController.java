@@ -72,12 +72,12 @@ public class UsuarioController {
 		return "usuario/login";
 	}
 	
-	@PostMapping("/acceder")
+	@GetMapping("/acceder")
 	public String acceder(Usuario usuario, HttpSession session, RedirectAttributes redirectAttributes) {
 	
 		LOGGER.info("Accesos {}", usuario);
 		
-		Optional<Usuario> user = usurioService.findByEmail(usuario.getEmail());
+		Optional<Usuario> user = usurioService.get(Integer.parseInt(session.getAttribute("idusuario").toString()));
 		
 		if (user.isPresent()) {
 			
