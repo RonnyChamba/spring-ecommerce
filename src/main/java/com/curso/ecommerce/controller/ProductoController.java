@@ -96,7 +96,7 @@ public class ProductoController {
 		LOGGER.info("Producto buscado {}",producto);
 		
 		if (producto ==null) {
-			redirectAttributes.addFlashAttribute("msg", "El producto con ID %s no existe".formatted(id));
+			redirectAttributes.addFlashAttribute("msg", String.format("El producto con ID %s no existe", id));
 			return "redirect:/productos";
 		}
 		
@@ -144,7 +144,7 @@ public class ProductoController {
 		LOGGER.info("Producto buscado a eliminar {}",producto);
 		
 		if (producto ==null) {
-			redirectAttributes.addFlashAttribute("msg", "El producto con ID %s no existe".formatted(id));
+			redirectAttributes.addFlashAttribute("msg", String.format("El producto con ID %s no existe",id));
 		}else {
 			
 		

@@ -88,7 +88,7 @@ public class UsuarioController {
 													    :"redirect:/";		
 		}	
 		LOGGER.info("Usuario no existe");
-		redirectAttributes.addFlashAttribute("msgLogin", "Usuario  <strong> %s </strong>  no esta registrado".formatted(usuario.getEmail()));
+		redirectAttributes.addFlashAttribute("msgLogin", String.format("Usuario  <strong> %s </strong>  no esta registrado",usuario.getEmail()));
 		return  "redirect:/usuario/login";
 	}
 	

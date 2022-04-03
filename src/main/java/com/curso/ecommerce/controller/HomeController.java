@@ -97,9 +97,9 @@ public class HomeController {
 
 			model.addAttribute("msg",
 					!isExiste
-							? "El producto <strong > %s </strong> fue agregado correctamente "
-									.formatted(producto.getNombre())
-							: "El producto <strong > %s </strong> ya esta registrado".formatted(producto.getNombre()));
+							? String.format("El producto <strong > %s </strong> fue agregado correctamente "
+									,producto.getNombre())
+							: String.format("El producto <strong > %s </strong> ya esta registrado", producto.getNombre()));
 			model.addAttribute("tipoMsg", !isExiste);
 
 			total = detalles.stream().mapToDouble(dt -> dt.getTotal()).sum();
@@ -207,8 +207,7 @@ public class HomeController {
 					.collect(Collectors.toList());
 
 			if (productosFiltro.size() < 1) {
-				model.addAttribute("msgSearch",
-						"No se encontraron  coincidencias para el nombre <strong> %s </strong>".formatted(nombre));
+				model.addAttribute("msgSearch",String.format("No se encontraron  coincidencias para el nombre <strong> %s </strong>", nombre));
 			}
 
 			LOGGER.info("Longitud productos encontrados: {}", productosFiltro.size());
