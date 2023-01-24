@@ -73,7 +73,8 @@ public class HomeController {
 	}
 
 	@PostMapping("/cart")
-	public String addCart(@RequestParam Integer id, @RequestParam Integer cantidad, Model model) {
+	public String addCart(@RequestParam Integer id, @RequestParam Integer cantidad,
+                          Model model, HttpSession session) {
 
 		Producto producto = productoService.get(id).orElse(null);
 		LOGGER.info("Producto añadido al carrito {}", producto);
@@ -108,6 +109,7 @@ public class HomeController {
 
 			model.addAttribute("cards", detalles);
 			model.addAttribute("orden", orden);
+            model.addAttribute("sesion", session.getAttribute("idusuario"));
 		}
 
 		return "usuario/carrito";
@@ -155,6 +157,7 @@ public class HomeController {
 		model.addAttribute("cards", detalles);
 		model.addAttribute("orden", orden);
 		model.addAttribute("usuario", usuario);
+		model.addAttribute("sesion", session.getAttribute("idusuario"));
 		return "usuario/resumenorden";
 	}
 

@@ -13,7 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 public final class UploadFileService {
 
 	
-	private final String FOLDER = "src//main//resources//static/img";
+	//private final String FOLDER = "src//main//resources//static/img";
+	private final String FOLDER = "images//";
+
 	
 	
 	public String saveImage(MultipartFile file) throws IOException {

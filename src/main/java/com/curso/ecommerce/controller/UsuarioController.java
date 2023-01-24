@@ -61,7 +61,6 @@ public class UsuarioController {
 		usuario.setTipo("USER");
 		usuario.setPassword(passEconde.encode(usuario.getPassword()));
 		usurioService.save(usuario);
-		
 		return "redirect:/";
 	}
 	

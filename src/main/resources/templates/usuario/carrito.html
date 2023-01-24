@@ -3,98 +3,101 @@
 
 <head>
 
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
 
-  <title>Spring eCommerce</title>
+    <title>Spring eCommerce</title>
 
-   <!-- Bootstrap core CSS -->
-  <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/vendor/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 
-  <!-- Custom styles for this template -->
-  <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/heroic-features.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link th:href="@{/css/style-general.css}" rel="stylesheet">
 
 
 </head>
 
 <body>
 
- <!-- Navigation -->
-  <div  th:if="${sesion==null}" th:include="usuario/template_usuario::header"></div>
-  <div  th:unless="${sesion==null}" th:include="usuario/template_usuario::header-user"></div>
+<!-- Navigation -->
+<div th:if="${sesion==null}" th:include="usuario/template_usuario::header"></div>
+<div th:unless="${sesion==null}" th:include="usuario/template_usuario::header-user"></div>
 
-	<div th:if="${msg != null}" th:utext="${msg}" class="alert" 
-					th:classappend="${tipoMsg}? 'alert-success': 'alert-warning' " >
-		
-	</div>
-    <!-- Page Content -->
-    <div class="container">
+<!-- Page Content -->
+<div class="container">
 
-
-      <!-- Page Heading/Breadcrumbs -->
-      <h1 class="mt-4 mb-3">
+    <div th:if="${msg != null}" th:utext="${msg}" class="alert"
+         th:classappend="${tipoMsg}? 'alert-success': 'alert-warning' "></div>
+    <!-- Page Heading/Breadcrumbs -->
+    <h1 class="mt-4 mb-3">
         Spring eCommerce <small>Carrito</small>
-      </h1>
+    </h1>
 
-      <ol class="breadcrumb">
+    <ol class="breadcrumb">
         <li class="breadcrumb-item"><a th:href="@{/}">Home</a></li>
         <li class="breadcrumb-item active">Carrito</li>
-      </ol>
+    </ol>
 
-      <!-- Blog Post -->
-      <div class="card mb-4">
+    <!-- Blog Post -->
+    <div class="card mb-4">
         <div class="card-body">
-          <div class="row">
-           <div class="col-lg-9">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">Producto</th>
-                  <th scope="col">Precio</th>
-                  <th scope="col">Cantidad</th>
-                  <th scope="col">Total</th>
-                  <th scope="col">Acción</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr th:each ="dorden : ${cards}">
-                  <td th:text="${dorden.nombre}"></td>
-                  <td th:text="${dorden.precio}"></td>
-                  <td th:text="${dorden.cantidad}"></td>
-                  <td th:text="${dorden.total}"></td>
-                  <td><a th:href="@{/delete/card/{id}(id=${dorden.producto.id})}" class="btn btn-danger">Quitar</a></td>
-                </tr>
-              </tbody>
-            </table>
-            <div th:if="${cards.size()<1}" class="alert alert-info"> Tu carrito se encuentra vacio</div>
-          </div>
+            <div class="row">
+                <div class="col-lg-9">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Total</th>
+                            <th scope="col">Acción</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="dorden : ${cards}">
+                            <td th:text="${dorden.nombre}"></td>
+                            <td th:text="${dorden.precio}"></td>
+                            <td th:text="${dorden.cantidad}"></td>
+                            <td th:text="${dorden.total}"></td>
+                            <td><a th:href="@{/delete/card/{id}(id=${dorden.producto.id})}" class="btn btn-danger">Quitar</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div th:if="${cards.size()<1}" class="alert alert-info"> Tu carrito se encuentra vacio</div>
+                </div>
 
-          <div class="col-lg-3">
-            <h2 class="card-title">SUBTOTAL</h2>
+                <div class="col-lg-3">
+                    <h2 class="card-title">SUBTOTAL</h2>
 
-            <ul class="list-group">
-              <li class="list-group-item"><h5 th:text =" 'Total $:' + ${orden.total}"></h5></li>
-              <a th:href="@{/order}" class="btn btn-dark">Ver Orden</a>
-            </ul>
-          </div>
+                    <ul class="list-group">
+                        <li class="list-group-item"><h5 th:text=" 'Total $:' + ${orden.total}"></h5></li>
 
+                        <button th:if="${cards.size()<1}" class="btn btn-dark" disabled>Ver Orden</button>
+                        <a th:if="${cards.size()>0}" th:href="@{/order}" class="btn btn-dark">Ver Orden</a>
+                    </ul>
+                </div>
+
+            </div>
         </div>
-      </div>
     </div>
     <!-- /.container -->
 
-	</div>
-    <!-- Footer -->
-    
-      <div th:include="usuario/template_usuario.html::footer"></div>
-  
-    <!-- Bootstrap core JavaScript -->
-    <script th:src="@{/vendor/jquery/jquery.min.js}"></script>
-    <script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
-   
+</div>
+<!-- Footer -->
 
-  </body>
+<div th:include="usuario/template_usuario.html::footer"></div>
 
-  </html>
+<!-- Bootstrap core JavaScript -->
+<script th:src="@{/vendor/jquery/jquery.min.js}"></script>
+<script th:src="@{/vendor/bootstrap/js/bootstrap.bundle.min.js}"></script>
+
+
+</body>
+
+</html>
